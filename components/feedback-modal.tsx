@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,11 +12,11 @@ import {
 } from "@/components/ui/dialog";
 
 export interface FeedbackModalProps {
-  delay?: number;
+  delay?: number; // in milliseconds
 }
 
 export function FeedbackModalComponent({ delay }: FeedbackModalProps) {
-  const [memoizedDelay] = useState(delay || 3000);
+  const [memoizedDelay] = useState(delay || 30000);
   const [isOpen, setIsOpen] = useState(false);
   const [hasResponded, setHasResponded] = useState(false);
 
@@ -30,21 +30,25 @@ export function FeedbackModalComponent({ delay }: FeedbackModalProps) {
     return () => clearTimeout(timer);
   }, [hasResponded, memoizedDelay]);
 
-  const handleResponse = useCallback((wouldUse: boolean) => {
+  const handleResponse = (wouldUse: boolean) => {
     console.log(`User would ${wouldUse ? "" : "not "}use the app`);
     setHasResponded(true);
     setIsOpen(false);
     // Here you could send the response to your backend or analytics service
-  }, []);
+  };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-[425px] bg-white">
+    <Dialog open={isOpen} onOpenChange={() => {}}>
+      <DialogContent
+        className="sm:max-w-[425px] bg-white"
+        onPointerDownOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Feedback Request</DialogTitle>
           <DialogDescription>
-            We value your opinion. After trying our dashboard, we&rsquo;d love
-            to know:
+            We value your opinion. After trying our dashboard, we&squo;d love to
+            know:
           </DialogDescription>
         </DialogHeader>
         <div className="py-4">
@@ -53,19 +57,10 @@ export function FeedbackModalComponent({ delay }: FeedbackModalProps) {
           </h4>
         </div>
         <DialogFooter className="sm:justify-center">
-          <Button
-            variant="outline"
-            onClick={() => handleResponse(false)}
-            data-ph-capture-attribute-feedback-cta={false}
-          >
+          <Button variant="outline" onClick={() => handleResponse(false)}>
             No
           </Button>
-          <Button
-            onClick={() => handleResponse(true)}
-            data-ph-capture-attribute-feedback-cta={true}
-          >
-            Yes
-          </Button>
+          <Button onClick={() => handleResponse(true)}>Yes</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
