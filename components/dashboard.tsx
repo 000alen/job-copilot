@@ -1,36 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
-import {
   CalendarIcon,
   DollarSignIcon,
-  FileTextIcon,
-  SparklesIcon,
   UserIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   PlusIcon,
   ShareIcon,
-  FileIcon,
-  SaveIcon,
-  DownloadIcon,
-  PrinterIcon,
-  EditIcon,
-  TrashIcon,
-  BriefcaseIcon,
 } from "lucide-react";
 import {
   Select,
@@ -39,169 +21,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { jobApplications, userProfile, type Question } from "@/lib/mock-data";
+import { JobApplication, jobApplications, userProfile } from "@/lib/mock-data";
+import { Question } from "@/components/question";
+import { Menu } from "@/components/menu";
+import { useRouter } from "next/navigation";
 
-function Question({
-  q,
-  openQuestionId,
-  setOpenQuestionId,
-}: {
-  q: Question;
-  openQuestionId: number | null;
-  setOpenQuestionId: React.Dispatch<React.SetStateAction<number | null>>;
-}) {
-  return (
-    <div key={q.id}>
-      <Dialog
-        open={openQuestionId === q.id}
-        onOpenChange={(open) => {
-          if (!open) setOpenQuestionId(null);
-        }}
-      >
-        <DialogTrigger asChild>
-          <Button
-            variant="ghost"
-            className="w-full justify-start p-0 text-left"
-            onClick={() => setOpenQuestionId(q.id)}
-          >
-            <h4 className="font-medium truncate">{q.question}</h4>
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] bg-white">
-          <DialogHeader>
-            <DialogTitle>{q.question}</DialogTitle>
-            <DialogDescription>
-              Answer the question below. Word limit: {q.wordLimit} words.
-            </DialogDescription>
-          </DialogHeader>
-          <Textarea
-            placeholder="Type your answer here..."
-            className="h-[200px]"
-          />
-          <div className="flex justify-between">
-            <Button variant="outline" onClick={() => setOpenQuestionId(null)}>
-              Cancel
-            </Button>
-            <Button onClick={() => setOpenQuestionId(null)}>Save Draft</Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-      <div className="mt-2 flex items-center justify-between">
-        <div className="flex items-center space-x-2 overflow-hidden">
-          <FileTextIcon className="h-4 w-4 flex-shrink-0 text-gray-500" />
-          <span className="text-xs text-gray-500 truncate">
-            {q.wordLimit} words limit
-          </span>
-        </div>
-        <Button variant="outline" size="sm" className="h-8 flex-shrink-0">
-          <SparklesIcon className="mr-2 h-4 w-4" />
-          Draft Response
-        </Button>
-      </div>
-      <Separator className="mt-4" />
-    </div>
-  );
+interface DashboardProps {
+  jobApplication: JobApplication;
 }
 
-export default function Dashboard() {
-  const [openQuestionId, setOpenQuestionId] = useState<number | null>(null);
+export default function Dashboard({
+  jobApplication: selectedJobApp,
+}: DashboardProps) {
+  const router = useRouter();
+
+  const [openQuestionId, setOpenQuestionId] = useState<string | null>(null);
   const [selectedApp, setSelectedApp] = useState("job-application");
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [selectedJobApp, setSelectedJobApp] = useState(jobApplications[0]);
+
+  const handleChangeJob = useCallback(
+    (jobId: string) => {
+      router.push(`/job/${jobId}`);
+    },
+    [router]
+  );
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       {/* Header with macOS-like menu and application selector */}
       <header className="bg-white border-b border-gray-200 px-4 py-2">
         <div className="flex items-center justify-between">
-          <div className="flex space-x-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  File
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <FileIcon className="mr-2 h-4 w-4" />
-                  <span>New Application</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <SaveIcon className="mr-2 h-4 w-4" />
-                  <span>Save Progress</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <DownloadIcon className="mr-2 h-4 w-4" />
-                  <span>Export as PDF</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <PrinterIcon className="mr-2 h-4 w-4" />
-                  <span>Print</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  Edit
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <EditIcon className="mr-2 h-4 w-4" />
-                  <span>Edit Profile</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <TrashIcon className="mr-2 h-4 w-4" />
-                  <span>Delete Application</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  View
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <UserIcon className="mr-2 h-4 w-4" />
-                  <span>User Profile</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <BriefcaseIcon className="mr-2 h-4 w-4" />
-                  <span>Job Listings</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <FileTextIcon className="mr-2 h-4 w-4" />
-                  <span>Application Status</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  Tools
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <SparklesIcon className="mr-2 h-4 w-4" />
-                  <span>AI Resume Review</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  <span>Interview Scheduler</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <DollarSignIcon className="mr-2 h-4 w-4" />
-                  <span>Salary Calculator</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          <Menu />
+
           <Select value={selectedApp} onValueChange={setSelectedApp}>
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Select application" />
@@ -250,18 +101,18 @@ export default function Dashboard() {
           </div>
           {sidebarOpen && (
             <div className="px-4 py-2">
-              {jobApplications.map((app) => (
+              {jobApplications.map((job) => (
                 <Button
-                  key={app.id}
+                  key={job.id}
                   variant="ghost"
                   className={`w-full justify-start mb-2 ${
-                    selectedJobApp.id === app.id ? "bg-gray-100" : ""
+                    selectedJobApp.id === job.id ? "bg-gray-100" : ""
                   }`}
-                  onClick={() => setSelectedJobApp(app)}
+                  onClick={() => handleChangeJob(job.id)}
                 >
                   <div className="text-left">
-                    <div className="font-medium">{app.company}</div>
-                    <div className="text-sm text-gray-500">{app.position}</div>
+                    <div className="font-medium">{job.company}</div>
+                    <div className="text-sm text-gray-500">{job.position}</div>
                   </div>
                 </Button>
               ))}

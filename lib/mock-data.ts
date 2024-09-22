@@ -1,11 +1,11 @@
 export interface Question {
-  id: number;
+  id: string;
   question: string;
   wordLimit: number;
 }
 
 export interface JobApplication {
-  id: number;
+  id: string;
   company: string;
   position: string;
   description: string;
@@ -35,17 +35,17 @@ export interface UserProfile {
 
 export const questions: Question[] = [
   {
-    id: 1,
+    id: "1",
     question: "Describe your experience with React and state management.",
     wordLimit: 250,
   },
   {
-    id: 2,
+    id: "2",
     question: "How do you approach testing in your projects?",
     wordLimit: 150,
   },
   {
-    id: 3,
+    id: "3",
     question:
       "Describe a challenging project you've worked on and how you overcame obstacles.",
     wordLimit: 300,
@@ -70,7 +70,7 @@ const jobSalary = "$120,000 - $150,000";
 
 export const jobApplications: JobApplication[] = [
   {
-    id: 1,
+    id: "1",
     company: "TechCorp Inc.",
     position: "Senior React Developer",
     description: jobDescription,
@@ -81,7 +81,7 @@ export const jobApplications: JobApplication[] = [
     progress: 75,
   },
   {
-    id: 2,
+    id: "2",
     company: "InnoSoft",
     position: "Full Stack Engineer",
     description: jobDescription,
@@ -92,7 +92,7 @@ export const jobApplications: JobApplication[] = [
     progress: 50,
   },
   {
-    id: 3,
+    id: "3",
     company: "DataViz Co.",
     position: "Frontend Specialist",
     description: jobDescription,
