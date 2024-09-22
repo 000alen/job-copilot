@@ -283,7 +283,7 @@ export default function Dashboard({
         </div>
       </footer>
 
-      <FeedbackModalComponent delay={3000} />
+      <FeedbackModalComponent delay={30000} />
     </div>
   );
 }
