@@ -82,11 +82,18 @@ export function LandingPageComponent() {
             </nav>
             <div className="flex space-x-4">
               <Link href="/auth">
-                <Button variant="outline">Log in</Button>
+                <Button
+                  variant="outline"
+                  data-ph-capture-attribute-signup-attempt
+                >
+                  Log in
+                </Button>
               </Link>
 
               <Link href="/auth">
-                <Button>Sign up</Button>
+                <Button data-ph-capture-attribute-signup-attempt>
+                  Sign up
+                </Button>
               </Link>
             </div>
           </div>
@@ -128,11 +135,17 @@ export function LandingPageComponent() {
             </p>
             <div className="flex justify-center space-x-4">
               <Link href="/job/1">
-                <Button size="lg">See Demo</Button>
+                <Button size="lg" data-ph-capture-attribute-demo-cta>
+                  See Demo
+                </Button>
               </Link>
 
               <Link href="/auth">
-                <Button size="lg" variant="outline">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  data-ph-capture-attribute-signup-attempt
+                >
                   Start for Free
                 </Button>
               </Link>
@@ -214,7 +227,9 @@ export function LandingPageComponent() {
                   </span>
                 </div>
                 <Link href="/job/1">
-                  <Button>Optimize My Applications</Button>
+                  <Button data-ph-capture-attribute-demo-cta>
+                    Optimize My Applications
+                  </Button>
                 </Link>
               </div>
             </div>
@@ -313,7 +328,11 @@ export function LandingPageComponent() {
                     </li>
                   </ul>
                   <Link href="/job/1">
-                    <Button size="lg" className="w-full">
+                    <Button
+                      size="lg"
+                      className="w-full"
+                      data-ph-capture-attribute-demo-cta
+                    >
                       See Demo
                     </Button>
                   </Link>
@@ -347,7 +366,11 @@ export function LandingPageComponent() {
                     </li>
                   </ul>
                   <Link href="/auth">
-                    <Button size="lg" className="w-full">
+                    <Button
+                      size="lg"
+                      className="w-full"
+                      data-ph-capture-attribute-signup-attempt
+                    >
                       Get Started
                     </Button>
                   </Link>
@@ -371,7 +394,11 @@ export function LandingPageComponent() {
             </p>
 
             <Link href="/job/1">
-              <Button size="lg" variant="secondary">
+              <Button
+                size="lg"
+                variant="secondary"
+                data-ph-capture-attribute-demo-cta
+              >
                 See Demo
               </Button>
             </Link>

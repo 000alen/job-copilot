@@ -75,21 +75,33 @@ export function AuthPageComponent() {
                 </Button>
               </div>
             </div>
-            <Button disabled type="submit" className="w-full">
+            <Button
+              disabled
+              type="submit"
+              className="w-full"
+              data-ph-capture-attribute-signup-submit-attempt
+            >
               Sign In
             </Button>
           </form>
 
           <Separator className="flex-grow" title="OR" />
 
-          <Button disabled variant="outline" className="w-full">
+          <Button
+            disabled
+            variant="outline"
+            className="w-full"
+            data-ph-capture-attribute-signup-linkedin-attempt
+          >
             <LinkedinIcon className="mr-2 h-4 w-4" />
             Sign in with LinkedIn
           </Button>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <Link href="/job/1">
-            <Button className="w-full">See Demo</Button>
+            <Button className="w-full" data-ph-capture-attribute-demo-cta>
+              See Demo
+            </Button>
           </Link>
           <div className="text-sm text-center text-gray-500">
             Don&rsquo;t have an account?{" "}

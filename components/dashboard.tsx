@@ -25,6 +25,7 @@ import { JobApplication, jobApplications, userProfile } from "@/lib/mock-data";
 import { Question } from "@/components/question";
 import { Menu } from "@/components/menu";
 import { useRouter } from "next/navigation";
+import { FeedbackModalComponent } from "./feedback-modal";
 
 interface DashboardProps {
   jobApplication: JobApplication;
@@ -281,6 +282,8 @@ export default function Dashboard({
           </span>
         </div>
       </footer>
+
+      <FeedbackModalComponent delay={30000} />
     </div>
   );
 }
